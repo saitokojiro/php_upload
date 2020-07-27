@@ -1,0 +1,12 @@
+{
+    "name": "php_first/mail",
+    "authors": [
+        {
+            "name": "saitokojiro",
+            "email": "kazutonight@gmail.com"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "6.0"
+    }
+}
