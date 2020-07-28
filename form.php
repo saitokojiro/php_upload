@@ -1,47 +1,53 @@
 <?php
 require_once 'vendor/autoload.php';
 
-$email = $_POST['email'];
-/*
-$uploaddir = __DIR__ . '/uploads/';
-$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
-
- */
-$uploaddir = __DIR__ . '/uploads/';
-$name = $_FILES['userfile']['name'];
-$nameArr = explode('.', $name);
-$ext = $nameArr[count($nameArr) - 1];
-
 $uidFile = uniqid();
 
-$newName = $uidFile . '.' . $ext;
+$email = $_POST['email'];
 
-$uploadfile = $uploaddir . $newName;
+$yourName = $_POST['yourName'];
 
-echo '<pre>';
+var_dump($_POST);
 
-var_dump($_FILES);
-var_dump(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile));
-
-if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
-    echo "ok :" . $_FILES['userfile']['name'];
-
-} else {
-    echo "error : " . $_FILES['userfile']['name'];
-
+if ($_FILES && $_FILES['userfile']['name'] && !empty($email) && !empty($yourName)) {
     $zip = new ZipArchive();
-    $zip->open('./uploads/' . $newName . '.zip', ZipArchive::CREATE);
 
-    $zip->addFile('./uploads/' . $newName);
+    $uidFile = uniqid();
 
+    $zip_name = getcwd() . "/uploads/" . $uidFile . ".zip";
+
+    if ($zip->open($zip_name, ZipArchive::CREATE) !== true) {
+        echo "error";
+    }
+
+    $name = count($_FILES['userfile']['name']);
+    for ($i = 0; $i < $name; $i++) {
+        //change name to UID
+        /*
+        $nameArr = explode('.', $_FILES['userfile']['name'][$i]);
+        $ext = $nameArr[count($nameArr) - 1];
+        $uidFile = uniqid();
+        $newName = $uidFile . '.' . $ext;*/
+
+        //zip archive
+        $zip->addFromString($_FILES['userfile']['name'][$i], file_get_contents($_FILES['userfile']['tmp_name'][$i]));
+
+    }
     $zip->close();
 
-    header("Location: dlf.php?yourfile=" . $newName . ".zip&email=" . $email);
+    //$fileTimeName = getcwd() . "/uploads/"
+
+    $folder = new DirectoryIterator(dirname('uploads/*'));
+
+    foreach ($folder as $file) {
+        if ($file->isFile() && !$file->isDot() && (time() - $file->getMTime() > 240)) {
+            unlink($file->getPathname());
+        }
+
+    }
+
+    header("Location: dlf.php?yourfile=" . $uidFile . ".zip&email=" . $email . "&yourname=" . $yourName);
     exit;
 
 }
-
-echo ' Voici quelques informations de débogage :';
-print_r($_FILES);
-
 echo '</pre>';
