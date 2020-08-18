@@ -35,15 +35,17 @@ if ($_FILES && $_FILES['userfile']['name'] && !empty($email) && !empty($yourName
     }
     $zip->close();
 
-    //$fileTimeName = getcwd() . "/uploads/"
-
     $folder = new DirectoryIterator(dirname('uploads/*'));
 
     foreach ($folder as $file) {
-        if ($file->isFile() && !$file->isDot() && (time() - $file->getMTime() > 240)) {
-            unlink($file->getPathname());
-        }
+        $pathVerif = pathinfo($file, PATHINFO_EXTENSION);
+        if ($pathVerif === 'zip') {
+            if ($file->isFile() && !$file->isDot() && (time() - $file->getMTime() > 480)) {
+                unlink($file->getPathname());
+            }
+            var_dump($file);
 
+        }
     }
 
     header("Location: dlf.php?yourfile=" . $uidFile . ".zip&email=" . $email . "&yourname=" . $yourName);

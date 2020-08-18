@@ -6,6 +6,8 @@ $yourFile = $_GET['yourfile'];
 $yourName = $_GET['yourname'];
 $email = $_GET['email'];
 
+$ipServer = '8d514cb3f744.ngrok.io';
+
 $html = '<!DOCTYPE html>
 <html>
 <head>
@@ -86,13 +88,13 @@ html, body, .grid-container { height: 100%; margin: 0; }
 <body>
 <div class="grid-container">
 <div class="Title">
-  <span>WeTransfer</span>
+  <span>YTransfer</span>
 </div>
 <div class="message">
   <span>' . $yourName . ':' . ' has sent you a file!</span>
 </div>
 <div class="Button">
-  <a href="' . 'http://127.0.0.99/mdlp.php?yourfile=' . $yourFile . '">Download</a>
+  <a href="' . 'http://' . $ipServer . 'mdlp.php?yourfile=' . $yourFile . '">Download</a>
 </div>
 </div>
 </body>
@@ -102,15 +104,15 @@ html, body, .grid-container { height: 100%; margin: 0; }
 
 var_dump($yourFile);
 
-$transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 25))
-    ->setUsername('1ea7ef852d99f5')
-    ->setPassword('d2cb97ebdf3b95')
+$transport = (new Swift_SmtpTransport('smtp.host.com', 587))
+    ->setUsername('username')
+    ->setPassword('password')
 ;
 
 $mailer = new Swift_Mailer($transport);
 
 $message = (new Swift_Message('download your file'))
-    ->setFrom(['WeTransfer@service.ran' => 'WeTransfer'])
+    ->setFrom(['mailFrom' => 'NameFrom'])
     ->setTo([$email => 'Mr Plop'])
     ->setBody($html, "text/html")
     /*->setBody("download your file :  " . "<a href=" . "http://127.0.0.99/mdlp.php?yourfile=" . $yourFile . ">click here</a>
@@ -118,6 +120,36 @@ delete your file <a href=" . "http://127.0.0.99/delete.php?yourfile=" . $yourFil
 ;
 
 $result = $mailer->send($message);
+/*
+$transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 25))
+->setUsername('1ea7ef852d99f5')
+->setPassword('d2cb97ebdf3b95')
 
+$mail = new PHPMailer;
+$mail->isSMTP();
+$mail->Host = 'smtp.host.com';
+$mail->Port = 587;
+$mail->SMTPAuth = true;
+$mail->Username = '';
+$mail->Password = '';
+$mail->setFrom('', 'Joel LIN');
+$mail->addAddress($email, $yourName);
+if ($mail->addReplyTo($_POST['email'], $_POST['name'])) {
+$mail->Subject = 'PHPMailer contact form';
+$mail->isHTML(false);
+$mail->Body = <<<EOT
+Email: {$email}
+Name: {$yourName}
+Message: {$html}
+EOT;
+if (!$mail->send()) {
+$msg = 'Sorry, something went wrong. Please try again later.';
+} else {
+$msg = 'Message sent! Thanks for contacting us.';
+}
+} else {
+$msg = 'Share it with us!';
+}
+ */
 header("Location: index.php");
 exit;

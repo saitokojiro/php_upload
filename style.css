@@ -1,6 +1,6 @@
 .titleText {
     position: absolute;
-    top: 30%;
+    top: 20%;
     left: 50%;
     text-align: center;
     margin-top: -100px;
@@ -24,7 +24,7 @@
 
 form {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     margin-top: -100px;
     margin-left: -250px;
@@ -43,7 +43,7 @@ form {
     width: 500px;
     height: 300px;
     transform: translate(-50%, -50%);
-    border: 4px dashed #fff;
+    /*!border: 4px dashed #fff;*/
 }
 
 form p {
@@ -79,17 +79,24 @@ form button:active {
     border: 0;
 }
 
-.my-form {
+.my-form>.formControle {
     display: flex;
     flex-direction: column;
     text-align: center;
+    /*! height: ; */
 }
 
-.my-form>input {
+.formControle {
+    display: flex !important;
+    flex-direction: column !important;
+    text-align: center !important;
+}
+
+.my-form>.formControle>input {
     height: 30px
 }
 
-.my-form>#userfile {
+.my-form>.formControle>#userfile {
     margin-top: 10px;
     text-align: center;
 }
@@ -114,12 +121,13 @@ form button:active {
 
 .file-target {
     display: block;
-    padding: 14px 45px;
+    /*! padding: 14px 45px; */
     background: #39D2B4;
-    /*color: #fff;*/
     font-size: 1em;
     transition: all .4s;
     cursor: pointer;
+    height: 120px;
+    line-height: 120px;
 }
 
 
@@ -127,11 +135,12 @@ form button:active {
     position: absolute;
     top: 5;
     left: 0;
-    width: 50vh;
+    width: 50.4vh;
     opacity: 0;
     padding: 11px 0;
-    /*!border: 1px solid black;*/
+    /*! border: 1px solid black; */
     cursor: pointer;
+    height: 96px;
 }
 
 
@@ -161,4 +170,52 @@ form button:active {
     border: none;
     height: 70px !important;
 
+}
+
+
+.fileBox {
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    height: 25vh;
+    border: 1px solid #e6e6e6;
+
+}
+
+.fileBox>.titleBox {
+    /*! margin-bottom: 10px; */
+    padding: 10px;
+    background: #f2f2f2;
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+.fileBox>.titleBox {
+    /*margin-left: 20vh;*/
+
+
+}
+
+.boxContentFile {
+    overflow-y: auto;
+    height: 20vh;
+}
+
+.boxItemFile {
+    display: flex;
+    vertical-align: middle;
+    margin-top: 10px;
+
+}
+
+.btnDeleteFile {
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 50px;
+
+}
+
+.titleItemFile {
+    text-align: left;
 }

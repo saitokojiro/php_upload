@@ -20,14 +20,15 @@ $yourFile = $_GET['yourfile'];
 if (file_exists(getcwd() . '/uploads/' . $yourFile)):
 ?>
         <div class="jumbotron text-center">
-            <h1 class="display-3">WeTransfer</h1>
+            <h1 class="display-3">YTransfer</h1>
             <br>
             <p class="lead">thank you for using the <strong>WeTransfer </strong>service.</p>
             <hr>
             <p class="lead">
                 <?php
+$ipServer = '8d514cb3f744.ngrok.io';
 
-echo " <a href=" . "http://127.0.0.99/uploads/" . $yourFile . ">Download your file</a>";
+echo " <a href=" . "http://" . $ipServer . "/uploads/" . $yourFile . ">Download your file</a>";
 ?>
             </p>
         </div>
